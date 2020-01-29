@@ -1,5 +1,6 @@
+vec = require "CPML.vec2"
 local player = {
-  pos = { x = 300, y = 300},
+  pos = vec(300, 300),
   size = {w = 50, h = 50},
   speed = 500,
   color = {r = 0.5, g = 1, b = 1},
@@ -11,6 +12,7 @@ function player:draw()
                           self.color.b)
   love.graphics.rectangle("fill", self.pos.x, self.pos.y,
                           self.size.w, self.size.h)
+
 end
 
 function player:update(dt)
@@ -18,18 +20,22 @@ function player:update(dt)
 end
 
 function player:update_movement(dt)
+  local mov_vec = vec(0, 0)
   if love.keyboard.isDown("w") then
-    self.pos.y = self.pos.y - self.speed * dt
+    mov_vec = mov_vec - vec(0, 1)
   end
   if love.keyboard.isDown("a") then
-    self.pos.x = self.pos.x - self.speed * dt
+    mov_vec = mov_vec - vec(1, 0)
   end
   if love.keyboard.isDown("s") then
-    self.pos.y = self.pos.y + self.speed * dt
+    mov_vec = mov_vec + vec(0, 1)
   end
   if love.keyboard.isDown("d") then
-    self.pos.x = self.pos.x + self.speed * dt
+    mov_vec = mov_vec + vec(1, 0)
   end
+  local normalized = vec()
+  vec.normalize(normalized, mov_vec)
+  self.pos = self.pos + mov_vec * self.speed * dt
 end
 
 return player
