@@ -1,9 +1,9 @@
+WIN_S = {w = 1000, h = 800}
 local vec2 = require "CPML.vec2"
 function love.load()
-
+  love.window.setMode(WIN_S.w, WIN_S.h)
   ELEMENTS = {
     require("player")(vec2(300, 300))
-
   }
 
 end

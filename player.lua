@@ -39,6 +39,18 @@ local function new(_pos)
     local normalized = vec2()
     vec2.normalize(normalized, mov_vec)
     self.pos = self.pos + mov_vec * self.speed * dt
+
+    --keep player inside window
+    if self.pos.x + self.size.w > WIN_S.w then
+      self.pos.x = WIN_S.w - self.size.w
+    elseif self.pos.x < 0 then
+      self.pos.x = 0
+    end
+    if self.pos.y + self.size.h > WIN_S.h then
+      self.pos.y = WIN_S.h - self.size.h
+    elseif self.pos.y < 0 then
+      self.pos.y = 0
+    end
   end
 
   function player:mousepressed(button)
