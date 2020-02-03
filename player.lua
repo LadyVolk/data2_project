@@ -17,7 +17,7 @@ local function new(_pos)
   end
 
   function player:update(dt)
-    player:update_movement(dt)
+    self:update_movement(dt)
   end
 
   function player:update_movement(dt)
