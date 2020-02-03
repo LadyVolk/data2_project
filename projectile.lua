@@ -1,8 +1,9 @@
 local function new(_pos, _direction)
 
   local projectile = {
+    id = "projectile",
     pos = _pos,
-    size = {w = 10, h = 5},
+    size = {w = 10, h = 10},
     speed = 1000,
     color = {r = 0, g = 1, b = 1},
     direction = _direction,

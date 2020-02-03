@@ -1,18 +1,32 @@
 local vec2 = require "CPML.vec2"
 function love.load()
-  player = require("player")(vec2(300, 300))
-  projectile = require("projectile")(vec2(200, 200),
-                        vec2(1, 0))
+
+  ELEMENTS = {
+    require("player")(vec2(300, 300))
+
+  }
+
 end
 
 function love.update(dt)
-  player:update(dt)
-  projectile:update(dt)
+  for i, element in ipairs(ELEMENTS) do
+    element:update(dt)
+  end
 end
 
 function love.draw()
-  player:draw()
-  projectile:draw()
+  for i, element in ipairs(ELEMENTS) do
+    element:draw()
+  end
+
+end
+
+function love.mousepressed(x, y, button, isTouch)
+  for i, element in ipairs(ELEMENTS) do
+    if element.id == "player" then
+      element:mousepressed(button)
+    end
+  end
 end
 
 function love.keypressed(key, scancode, isrepeat)

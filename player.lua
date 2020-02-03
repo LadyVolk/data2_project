@@ -1,7 +1,8 @@
 local vec2 = require "CPML.vec2"
-
+local projectile = require("projectile")
 local function new(_pos)
   local player = {
+    id = "player",
     pos = _pos,
     size = {w = 50, h = 50},
     speed = 500,
@@ -38,6 +39,18 @@ local function new(_pos)
     local normalized = vec2()
     vec2.normalize(normalized, mov_vec)
     self.pos = self.pos + mov_vec * self.speed * dt
+  end
+
+  function player:mousepressed(button)
+    self:shoot()
+  end
+
+  function player:shoot()
+    local vec_dir = vec2()
+    vec2.normalize(vec_dir, vec2(love.mouse.getPosition())-self.pos)
+    local tiro = projectile(vec2(self.pos.x, self.pos.y), vec_dir)
+    table.insert(ELEMENTS, tiro)
+    print(tiro.direction)
   end
 
   return player
