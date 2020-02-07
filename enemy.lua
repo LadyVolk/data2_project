@@ -21,6 +21,11 @@ local function new(_pos)
     self.size.x, self.size.y)
   end
 
+  function enemy:hit(projectile)
+    self.death = true
+    projectile.death = true
+  end
+
   return enemy
 end
 

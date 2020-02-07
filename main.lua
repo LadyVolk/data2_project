@@ -19,7 +19,14 @@ function love.update(dt)
     for i2, element2 in ipairs(ELEMENTS) do
       if element ~= element2 then
         if element.id == "player" and element2.id == "enemy" then
-          print(util.collision(element, element2))
+          if util.collision(element, element2) then
+            element:hit(element2)
+          end
+        end
+        if element.id == "projectile" and element2.id == "enemy" then
+          if util.collision(element, element2) then
+            element2:hit(element)
+          end
         end
       end
     end

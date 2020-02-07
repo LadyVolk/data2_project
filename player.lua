@@ -69,6 +69,10 @@ local function new(_pos)
     table.insert(ELEMENTS, tiro)
   end
 
+  function player:hit(enemy)
+    self.death = true
+  end
+
   return player
 end
 
