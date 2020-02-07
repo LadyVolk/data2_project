@@ -1,4 +1,5 @@
 local vec2 = require "CPML.vec2"
+local util = require "util"
 
 WIN_S = vec2(1000, 800)
 
@@ -13,6 +14,15 @@ end
 function love.update(dt)
   for i, element in ipairs(ELEMENTS) do
     element:update(dt)
+  end
+  for i, element in ipairs(ELEMENTS) do
+    for i2, element2 in ipairs(ELEMENTS) do
+      if element ~= element2 then
+        if element.id == "player" and element2.id == "enemy" then
+          print(util.collision(element, element2))
+        end
+      end
+    end
   end
   for i = #ELEMENTS, 1, -1 do
     if ELEMENTS[i].death then
