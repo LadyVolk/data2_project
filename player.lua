@@ -7,6 +7,7 @@ local function new(_pos)
     size = {w = 50, h = 50},
     speed = 500,
     color = {r = 0.5, g = 1, b = 1},
+    death = false,
   }
 
   function player:draw()
@@ -62,7 +63,6 @@ local function new(_pos)
     vec2.normalize(vec_dir, vec2(love.mouse.getPosition())-self.pos)
     local tiro = projectile(vec2(self.pos.x, self.pos.y), vec_dir)
     table.insert(ELEMENTS, tiro)
-    print(tiro.direction)
   end
 
   return player

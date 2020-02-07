@@ -12,6 +12,11 @@ function love.update(dt)
   for i, element in ipairs(ELEMENTS) do
     element:update(dt)
   end
+  for i = #ELEMENTS, 1, -1 do
+    if ELEMENTS[i].death then
+      table.remove(ELEMENTS, i)
+    end
+  end
 end
 
 function love.draw()
@@ -32,5 +37,8 @@ end
 function love.keypressed(key, scancode, isrepeat)
   if key == "escape" then
     love.event.quit()
+  end
+  if key == "f1" then
+    print("number of elements: "..#ELEMENTS)
   end
 end

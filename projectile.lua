@@ -7,6 +7,7 @@ local function new(_pos, _direction)
     speed = 1000,
     color = {r = 0, g = 1, b = 1},
     direction = _direction,
+    death = false,
   }
 
   function projectile:update(dt)
@@ -22,7 +23,16 @@ local function new(_pos, _direction)
 
   function projectile:update_movement(dt)
     self.pos = self.pos + self.direction * self.speed * dt
+
+    --check if shoot is outside window
+    if self.pos.x < -self.size.w or self.pos.x > WIN_S.w or
+       self.pos.y < -self.size.h or self.pos.y > WIN_S.h
+    then
+      self.death = true
+    end
   end
+
+
   return projectile
 end
 return new
