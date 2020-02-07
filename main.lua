@@ -32,6 +32,9 @@ function love.mousepressed(x, y, button, isTouch)
       element:mousepressed(button)
     end
   end
+  if button == 2 then
+    table.insert(ELEMENTS, require ("enemy")(vec2(x, y)))
+  end
 end
 
 function love.keypressed(key, scancode, isrepeat)

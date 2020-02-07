@@ -55,7 +55,9 @@ local function new(_pos)
   end
 
   function player:mousepressed(button)
-    self:shoot()
+    if button == 1 then
+      self:shoot()
+    end
   end
 
   function player:shoot()
