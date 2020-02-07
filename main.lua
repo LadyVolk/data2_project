@@ -23,7 +23,9 @@ function love.update(dt)
             element:hit(element2)
           end
         end
-        if element.id == "projectile" and element2.id == "enemy" then
+        if element.id == "projectile" and element2.id == "enemy"
+           and not element.death and not element2.death
+        then
           if util.collision(element, element2) then
             element2:hit(element)
           end

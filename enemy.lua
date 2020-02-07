@@ -8,6 +8,7 @@ local function new(_pos)
     size = vec2(30,30),
     color = {r = 1, g = 0, b = 0},
     death = false,
+    health = 10,
   }
 
   function enemy:update(dt)
@@ -22,7 +23,10 @@ local function new(_pos)
   end
 
   function enemy:hit(projectile)
-    self.death = true
+    self.health = self.health - projectile.damage
+    if self.health <= 0 then
+      self.death = true
+    end
     projectile.death = true
   end
 

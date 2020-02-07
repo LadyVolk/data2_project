@@ -9,6 +9,7 @@ local function new(_pos)
     speed = 500,
     color = {r = 0.5, g = 1, b = 1},
     death = false,
+    health = 10,
   }
 
   function player:draw()

@@ -10,6 +10,7 @@ local function new(_pos, _direction)
     color = {r = 0, g = 1, b = 1},
     direction = _direction,
     death = false,
+    damage = 5,
   }
 
   function projectile:update(dt)
