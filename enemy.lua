@@ -22,8 +22,6 @@ local function new(_pos)
     --movement
     speed = 300,
     direction = vec_dir,
-    --simulation variables
-    size_for = 10000000,
   }
 
   function enemy:update(dt)
@@ -74,7 +72,7 @@ local function new(_pos)
   end
 
   function enemy:update_logic()
-    for i = 0, self.size_for do
+    for i = 0, SIMULATION_SIZE do
       --complex things in games enemies would do
     end
   end

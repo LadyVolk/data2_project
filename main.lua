@@ -6,7 +6,7 @@ local check_collisions
 local manager
 local font_fps
 
-
+SIMULATION_SIZE = 10000000
 WIN_S = vec2(1000, 800)
 
 function love.load()
@@ -44,7 +44,12 @@ function love.draw()
   --draw fps
   love.graphics.setFont(font_fps)
   love.graphics.setColor(0, 1, 0)
-  love.graphics.print("fps: "..love.timer.getFPS(), 0, 0)
+  love.graphics.print("fps: "..love.timer.getFPS(), 5, 0)
+  love.graphics.print("simulation size: "..SIMULATION_SIZE, 5, 20)
+  love.graphics.setColor(0, 1, 1)
+  love.graphics.print("CONTROLS", 5, WIN_S.y-70)
+  love.graphics.print("'WASD' to control player", 5, WIN_S.y-50)
+  love.graphics.print("'Q/E' to change simulation", 5, WIN_S.y-30)
 end
 
 function love.mousepressed(x, y, button, isTouch)
@@ -61,9 +66,14 @@ end
 function love.keypressed(key, scancode, isrepeat)
   if key == "escape" then
     love.event.quit()
-  end
-  if key == "f1" then
+  elseif key == "f1" then
     print("number of elements: "..#ELEMENTS)
+
+  --keys pressing for simulation chnages
+  elseif key == "q" and SIMULATION_SIZE > 1 then
+    SIMULATION_SIZE = SIMULATION_SIZE/10
+  elseif key == "e" then
+    SIMULATION_SIZE = SIMULATION_SIZE*10
   end
 end
 
