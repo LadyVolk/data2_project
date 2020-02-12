@@ -1,8 +1,11 @@
 local vec2 = require "CPML.vec2"
 local util = require "util"
-local manager
-
+--local functions
 local check_collisions
+--local variables
+local manager
+local font_fps
+
 
 WIN_S = vec2(1000, 800)
 
@@ -12,6 +15,9 @@ function love.load()
     require("player")(vec2(300, 300))
   }
   manager = require("enemy_manager")()
+
+  font_fps = love.graphics.newFont(20)
+
 end
 
 function love.update(dt)
@@ -35,6 +41,10 @@ function love.draw()
     element:draw()
   end
 
+  --draw fps
+  love.graphics.setFont(font_fps)
+  love.graphics.setColor(0, 1, 0)
+  love.graphics.print("fps: "..love.timer.getFPS(), 0, 0)
 end
 
 function love.mousepressed(x, y, button, isTouch)
