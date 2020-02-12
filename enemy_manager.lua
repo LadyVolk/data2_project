@@ -7,8 +7,9 @@ local function new()
 
     timer = 0,
     cooldown = 1,
+    quant = 0,
+    limit = 10,
   }
-
 
   function manager:update(dt)
     self.timer = self.timer + dt
@@ -20,10 +21,14 @@ local function new()
   end
 
   function manager:create_enemy()
-    local enemy_pos = vec2(love.math.random(0, WIN_S.x-30),
-                  love.math.random(0, WIN_S.y-30))
-    local e = enemy(enemy_pos)
-    table.insert(ELEMENTS, e)
+    if self.quant < self.limit then
+      self.quant = self.quant + 1
+      print(self.quant)
+      local enemy_pos = vec2(love.math.random(0, WIN_S.x-30),
+                    love.math.random(0, WIN_S.y-30))
+      local e = enemy(enemy_pos, self)
+      table.insert(ELEMENTS, e)
+    end
   end
 
   return manager

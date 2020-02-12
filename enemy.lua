@@ -1,7 +1,6 @@
 local vec2 = require "CPML.vec2"
 
-
-local function new(_pos)
+local function new(_pos, _manager)
 
   local vec_dir = vec2()
 
@@ -9,6 +8,7 @@ local function new(_pos)
                                love.math.random()*2-1))
 
   local enemy = {
+    manager = _manager,
     id = "enemy",
     pos = _pos,
     size = vec2(20,20),
@@ -48,6 +48,7 @@ local function new(_pos)
     self.health = self.health - projectile.damage
     if self.health <= 0 then
       self.death = true
+      self.manager.quant = self.manager.quant - 1
     end
     projectile.death = true
   end

@@ -59,7 +59,7 @@ function love.mousepressed(x, y, button, isTouch)
     end
   end
   if button == 2 then
-    table.insert(ELEMENTS, require ("enemy")(vec2(x, y)))
+    manager:create_enemy()
   end
 end
 
