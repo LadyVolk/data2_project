@@ -11,7 +11,7 @@ local function new(_pos)
   local enemy = {
     id = "enemy",
     pos = _pos,
-    size = vec2(30,30),
+    size = vec2(20,20),
     color = {r = 1, g = 0, b = 0},
     death = false,
     health = 10,
@@ -32,7 +32,7 @@ local function new(_pos)
         self.active = true
       end
     else
-      self.pos = self.pos + self.direction * self.speed * dt
+      enemy:update_movement(dt)
     end
   end
 
@@ -49,6 +49,25 @@ local function new(_pos)
       self.death = true
     end
     projectile.death = true
+  end
+
+  function enemy:update_movement(dt)
+    self.pos = self.pos + self.direction * self.speed * dt
+
+    if self.pos.x + self.size.x > WIN_S.x then
+      self.pos.x = WIN_S.x - self.size.x
+      self.direction.x = -self.direction.x
+    elseif self.pos.x < 0 then
+      self.pos.x = 0
+      self.direction.x = -self.direction.x
+    end
+    if self.pos.y + self.size.y > WIN_S.y then
+      self.pos.y = WIN_S.y - self.size.y
+      self.direction.y = -self.direction.y
+    elseif self.pos.y < 0 then
+      self.pos.y = 0
+      self.direction.y = -self.direction.y
+    end
   end
 
   return enemy

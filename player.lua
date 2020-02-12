@@ -5,7 +5,7 @@ local function new(_pos)
   local player = {
     id = "player",
     pos = _pos,
-    size = vec2(50, 50),
+    size = vec2(30, 30),
     speed = 500,
     color = {r = 0.5, g = 1, b = 1},
     death = false,

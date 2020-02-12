@@ -5,7 +5,7 @@ local function new(_pos, _direction)
   local projectile = {
     id = "projectile",
     pos = _pos,
-    size = vec2(10, 10),
+    size = vec2(15, 15),
     speed = 1000,
     color = {r = 0, g = 1, b = 1},
     direction = _direction,
