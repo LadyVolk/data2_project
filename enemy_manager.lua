@@ -7,7 +7,6 @@ local function new()
 
     timer = 0,
     cooldown = 2,
-
   }
 
 
