@@ -1,5 +1,6 @@
 local vec2 = require "CPML.vec2"
 local util = require "util"
+local manager
 
 WIN_S = vec2(1000, 800)
 
@@ -8,13 +9,16 @@ function love.load()
   ELEMENTS = {
     require("player")(vec2(300, 300))
   }
-
+  manager = require("enemy_manager")()
 end
 
 function love.update(dt)
+  manager:update(dt)
+
   for i, element in ipairs(ELEMENTS) do
     element:update(dt)
   end
+
   for i, element in ipairs(ELEMENTS) do
     for i2, element2 in ipairs(ELEMENTS) do
       if element ~= element2 then
