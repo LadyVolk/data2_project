@@ -1,6 +1,12 @@
 local vec2 = require "CPML.vec2"
 
+
 local function new(_pos)
+
+  local vec_dir = vec2()
+
+  vec2.normalize(vec_dir, vec2(love.math.random()*2-1,
+                               love.math.random()*2-1))
 
   local enemy = {
     id = "enemy",
@@ -9,9 +15,13 @@ local function new(_pos)
     color = {r = 1, g = 0, b = 0},
     death = false,
     health = 10,
+    --being active
     growing = 0,
     growth_time = 2,
     active = false,
+    --movement
+    speed = 300,
+    direction = vec_dir,
   }
 
   function enemy:update(dt)
@@ -21,6 +31,8 @@ local function new(_pos)
         self.growing = self.growth_time
         self.active = true
       end
+    else
+      self.pos = self.pos + self.direction * self.speed * dt
     end
   end
 
