@@ -22,6 +22,8 @@ local function new(_pos)
     --movement
     speed = 300,
     direction = vec_dir,
+    --simulation variables
+    size_for = 10000000,
   }
 
   function enemy:update(dt)
@@ -33,6 +35,7 @@ local function new(_pos)
       end
     else
       enemy:update_movement(dt)
+      enemy:update_logic()
     end
   end
 
@@ -67,6 +70,12 @@ local function new(_pos)
     elseif self.pos.y < 0 then
       self.pos.y = 0
       self.direction.y = -self.direction.y
+    end
+  end
+
+  function enemy:update_logic()
+    for i = 0, self.size_for do
+      --complex things in games enemies would do
     end
   end
 

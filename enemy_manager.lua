@@ -6,7 +6,7 @@ local function new()
   local manager ={
 
     timer = 0,
-    cooldown = 2,
+    cooldown = 1,
   }
 
 
