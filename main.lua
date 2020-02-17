@@ -132,7 +132,7 @@ function update_elements(dt)
     --parallelize the update logic for enemies
     local threads = {}
     for i = 1, THREADS - 1 do
-      table.insert(threads, love.thread.newThread(require "update_enemy_logic"))
+      table.insert(threads, love.thread.newThread(require "thread_code.update_enemy_logic"))
     end
     for i, thread in ipairs(threads) do
       thread:start(SIMULATION_SIZE)
@@ -140,7 +140,8 @@ function update_elements(dt)
     --send to channel
     local channel_element = love.thread.getChannel("element")
     for i, element in ipairs(ELEMENTS) do
-      channel_element:push(element.id)
+      soft_element = util.create_soft(element)
+      channel_element:push(soft_element)
     end
 
     for i = 1, THREADS - 1 do

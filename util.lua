@@ -9,4 +9,12 @@ function functs.collision(e1, e2)
     return true
   end
 end
+
+--create element that can be passed through channels
+function functs.create_soft(element)
+  local soft ={
+    id = element.id,
+  }
+  return soft
+end
 return functs
