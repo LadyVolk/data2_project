@@ -7,8 +7,9 @@ local check_collisions
 local manager
 local font_fps
 
-SIMULATION_SIZE = 10000000
+SIMULATION_SIZE = 1000000
 WIN_S = vec2(1000, 800)
+DEBUG = true
 
 function love.load()
   love.window.setMode(WIN_S.x, WIN_S.y)
@@ -114,17 +115,36 @@ function check_collisions()
 end
 
 function update_elements(dt)
+  --single thread
   if THREADS == 1 then
     for i, element in ipairs(ELEMENTS) do
       element:update(dt)
+      if element.id == "enemy" then
+        element:update_logic()
+      end
     end
   else
+    --multi thread
+    for i, element in ipairs(ELEMENTS) do
+      element:update(dt)
+    end
+
+    --parallelize the update logic for enemies
     local threads = {}
     for i = 1, THREADS - 1 do
-      table.insert(threads, love.thread.newThread(require "update_elements_thread"))
+      table.insert(threads, love.thread.newThread(require "update_enemy_logic"))
     end
     for i, thread in ipairs(threads) do
-      thread:start(i)
+      thread:start(SIMULATION_SIZE)
+    end
+    --send to channel
+    local channel_element = love.thread.getChannel("element")
+    for i, element in ipairs(ELEMENTS) do
+      channel_element:push(element.id)
+    end
+
+    for i = 1, THREADS - 1 do
+      channel_element:push("finished")
     end
     for i, thread in ipairs(threads) do
       thread:wait()

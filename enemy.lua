@@ -33,7 +33,7 @@ local function new(_pos, _manager)
       end
     else
       enemy:update_movement(dt)
-      enemy:update_logic()
+      
     end
   end
 

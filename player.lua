@@ -71,6 +71,9 @@ local function new(_pos)
   end
 
   function player:hit(enemy)
+    if DEBUG then
+      return
+    end
     self.death = true
   end
 

@@ -9,5 +9,4 @@ function functs.collision(e1, e2)
     return true
   end
 end
-
 return functs
