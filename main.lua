@@ -1,6 +1,7 @@
 local vec2 = require "CPML.vec2"
 local util = require "util"
 --local functions
+local update_elements
 local check_collisions
 --local variables
 local manager
@@ -26,9 +27,7 @@ end
 function love.update(dt)
   manager:update(dt)
 
-  for i, element in ipairs(ELEMENTS) do
-    element:update(dt)
-  end
+  update_elements(dt)
 
   check_collisions()
 
@@ -110,6 +109,25 @@ function check_collisions()
           end
         end
       end
+    end
+  end
+end
+
+function update_elements(dt)
+  if THREADS == 1 then
+    for i, element in ipairs(ELEMENTS) do
+      element:update(dt)
+    end
+  else
+    local threads = {}
+    for i = 1, THREADS - 1 do
+      table.insert(threads, love.thread.newThread(require "update_elements_thread"))
+    end
+    for i, thread in ipairs(threads) do
+      thread:start(i)
+    end
+    for i, thread in ipairs(threads) do
+      thread:wait()
     end
   end
 end
