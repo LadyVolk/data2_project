@@ -23,7 +23,6 @@ local function new()
   function manager:create_enemy()
     if self.quant < self.limit then
       self.quant = self.quant + 1
-      print(self.quant)
       local enemy_pos = vec2(love.math.random(0, WIN_S.x-30),
                     love.math.random(0, WIN_S.y-30))
       local e = enemy(enemy_pos, self)

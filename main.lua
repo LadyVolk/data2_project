@@ -18,6 +18,9 @@ function love.load()
 
   font_fps = love.graphics.newFont(20)
 
+  MAX_THREADS = love.system.getProcessorCount()
+
+  THREADS = 1
 end
 
 function love.update(dt)
@@ -46,10 +49,13 @@ function love.draw()
   love.graphics.setColor(0, 1, 0)
   love.graphics.print("fps: "..love.timer.getFPS(), 5, 0)
   love.graphics.print("simulation size: "..SIMULATION_SIZE, 5, 20)
+  love.graphics.print("number of threads: "..THREADS..
+                      " / "..MAX_THREADS, 5, 40)
   love.graphics.setColor(0, 1, 1)
-  love.graphics.print("CONTROLS", 5, WIN_S.y-70)
-  love.graphics.print("'WASD' to control player", 5, WIN_S.y-50)
-  love.graphics.print("'Q/E' to change simulation", 5, WIN_S.y-30)
+  love.graphics.print("CONTROLS", 5, WIN_S.y-90)
+  love.graphics.print("'WASD' to control player", 5, WIN_S.y-70)
+  love.graphics.print("'R/T' to change number of threads", 5, WIN_S.y-50)
+  love.graphics.print("'Q/E' to change simulation size", 5, WIN_S.y-30)
 end
 
 function love.mousepressed(x, y, button, isTouch)
@@ -74,7 +80,14 @@ function love.keypressed(key, scancode, isrepeat)
     SIMULATION_SIZE = SIMULATION_SIZE/10
   elseif key == "e" then
     SIMULATION_SIZE = SIMULATION_SIZE*10
+
+  --keys for changing number of THREADS
+  elseif key == "r" and THREADS > 1 then
+    THREADS = THREADS - 1
+  elseif key == "t" and THREADS < MAX_THREADS then
+    THREADS = THREADS + 1
   end
+
 end
 
 function check_collisions()
