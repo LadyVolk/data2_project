@@ -119,14 +119,13 @@ function update_elements(dt)
   if THREADS == 1 then
     for i, element in ipairs(ELEMENTS) do
       element:update(dt)
-      if element.id == "enemy" then
-        element:update_logic()
-      end
     end
   else
     --multi thread
     for i, element in ipairs(ELEMENTS) do
-      element:update(dt)
+      if element.id ~= "enemy" then
+        element:update(dt)
+      end
     end
 
     --parallelize the update logic for enemies
@@ -135,18 +134,29 @@ function update_elements(dt)
       table.insert(threads, love.thread.newThread(require "thread_code.update_enemy_logic"))
     end
     for i, thread in ipairs(threads) do
-      thread:start(SIMULATION_SIZE)
+      thread:start(SIMULATION_SIZE, dt, WIN_S.x, WIN_S.y)
     end
     --send to channel
+    local cont_enemies = 0
     local channel_element = love.thread.getChannel("element")
     for i, element in ipairs(ELEMENTS) do
-      soft_element = util.create_soft(element)
-      channel_element:push(soft_element)
+      if element.id == "enemy" then
+        cont_enemies = cont_enemies + 1
+        local soft_element = util.create_soft(element, i)
+        channel_element:push(soft_element)
+      end
     end
 
     for i = 1, THREADS - 1 do
       channel_element:push("finished")
     end
+
+    local ret_channel = love.thread.getChannel("ret_data")
+    for i = 1, cont_enemies do
+      local soft_enemy = ret_channel:demand()
+      util.update_enemy(soft_enemy, ELEMENTS[soft_enemy.index])
+    end
+
     for i, thread in ipairs(threads) do
       thread:wait()
     end

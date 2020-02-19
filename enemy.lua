@@ -25,15 +25,15 @@ local function new(_pos, _manager)
   }
 
   function enemy:update(dt)
-    if self.active == false then
+    if not self.active then
       self.growing = self.growing + dt
       if self.growing >= self.growth_time then
         self.growing = self.growth_time
         self.active = true
       end
     else
-      enemy:update_movement(dt)
-
+      self:update_movement(dt)
+      self:update_logic()
     end
   end
 
