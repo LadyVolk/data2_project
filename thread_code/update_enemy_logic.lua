@@ -1,4 +1,5 @@
 return [[
+
 local function update_movement(data, dt, win_x, win_y)
   data.pos_x = data.pos_x + data.dir_x * data.speed * dt
   data.pos_y = data.pos_y + data.dir_y * data.speed * dt

@@ -10,6 +10,7 @@ local function new(_pos)
     color = {r = 0.5, g = 1, b = 1},
     death = false,
     health = 10,
+    direction = vec2(),
   }
 
   function player:draw()

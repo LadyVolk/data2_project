@@ -11,10 +11,10 @@ local function new(_pos, _manager)
     manager = _manager,
     id = "enemy",
     pos = _pos,
-    size = vec2(20,20),
+    size = vec2(10,10),
     color = {r = 1, g = 0, b = 0},
     death = false,
-    health = 10,
+    health = 1,
     --being active
     growing = 0,
     growth_time = 2,
@@ -48,7 +48,6 @@ local function new(_pos, _manager)
     self.health = self.health - projectile.damage
     if self.health <= 0 then
       self.death = true
-      self.manager.quant = self.manager.quant - 1
     end
     projectile.death = true
   end
