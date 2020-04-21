@@ -7,11 +7,14 @@ local check_collisions
 local manager
 local font_fps
 
-SIMULATION_SIZE = 0
+SIMULATION_SIZE = 1000000
 WIN_S = vec2(1000, 800)
 DEBUG = true
 COLLISION_T = true
 ENEMY_LOGIC = true
+FPS_AVERAGE = 0
+FPS_COUNT = 0
+TIMER = 0
 
 function love.load()
   love.window.setMode(WIN_S.x, WIN_S.y)
@@ -28,6 +31,7 @@ function love.load()
 end
 
 function love.update(dt)
+  TIMER = TIMER + dt
   manager:update(dt)
 
   update_elements(dt)
@@ -49,10 +53,17 @@ function love.draw()
     element:draw()
   end
 
+  local fps = love.timer.getFPS()
+  local average = "-"
+  if TIMER > 3 then
+    FPS_AVERAGE = FPS_AVERAGE + fps
+    FPS_COUNT = FPS_COUNT + 1
+    average = FPS_AVERAGE/FPS_COUNT
+  end
   --draw fps
   love.graphics.setFont(font_fps)
   love.graphics.setColor(0, 1, 0)
-  love.graphics.print("fps: "..love.timer.getFPS(), 5, 0)
+  love.graphics.print("fps: "..fps.." / average: "..average, 5, 0)
   love.graphics.print("simulation size: "..SIMULATION_SIZE, 5, 20)
   love.graphics.print("number of threads: "..THREADS..
                       " / "..MAX_THREADS, 5, 40)
@@ -61,15 +72,18 @@ function love.draw()
   love.graphics.print("collision is "..text.." using threads", 5, 60)
   text = ENEMY_LOGIC and "" or "not"
   love.graphics.print("enemy logic is "..text.." using threads", 5, 80)
+  text = DEBUG and "true" or "false"
+  love.graphics.print("debug is "..text, 5, 100)
 
   love.graphics.setColor(0, 1, 1)
-  love.graphics.print("CONTROLS", 5, WIN_S.y-150)
-  love.graphics.print("use mouse to shoot", 5, WIN_S.y-130)
-  love.graphics.print("'WASD' to control player", 5, WIN_S.y-110)
-  love.graphics.print("'R/T' to change number of threads", 5, WIN_S.y-90)
-  love.graphics.print("'Q/E' to change simulation size", 5, WIN_S.y-70)
-  love.graphics.print("'f1' to toggle collision with threads", 5, WIN_S.y-50)
-  love.graphics.print("'f2' to toggle enemy logic with threads", 5, WIN_S.y-30)
+  love.graphics.print("CONTROLS", 5, WIN_S.y-170)
+  love.graphics.print("use mouse to shoot", 5, WIN_S.y-150)
+  love.graphics.print("'WASD' to control player", 5, WIN_S.y-130)
+  love.graphics.print("'R/T' to change number of threads", 5, WIN_S.y-110)
+  love.graphics.print("'Q/E' to change simulation size", 5, WIN_S.y-90)
+  love.graphics.print("'f1' to toggle collision with threads", 5, WIN_S.y-70)
+  love.graphics.print("'f2' to toggle enemy logic with threads", 5, WIN_S.y-50)
+  love.graphics.print("'f3' to toggle debug mode (player can die)", 5, WIN_S.y-30)
 end
 
 function love.mousepressed(x, y, button, isTouch)

@@ -8,7 +8,7 @@ local function new()
     timer = 0,
     cooldown = 0.01,
     quant = 0,
-    limit = 300,
+    limit = 50,
   }
 
   function manager:update(dt)
